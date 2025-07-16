@@ -11,11 +11,27 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
+    /// Start new pomodoro session
     Start {
+        /// Duration in minutes, for example `--duration 30` to begin 30 minute pomodoro.
+        #[arg(short, long)]
+        duration: Option<u32>,
 
+        #[arg(short, long)]
+        alert: bool,
     },
+    /// Finish active pomodoro.
+    Done {},
+    /// Show past pomodoros.
+    Log {},
 }
 
 fn main() {
     let cli = Cli::parse();
+
+    match &cli.command {
+        Commands::Start { duration: _, alert } => println!("Start command: {alert}"),
+        Commands::Done {} => println!("Done"),
+        Commands::Log {} => println!("Log past pomodoros"),
+    }
 }
