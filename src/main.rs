@@ -1,4 +1,5 @@
 mod pomo;
+mod app;
 
 use clap::{Parser, Subcommand};
 
@@ -30,7 +31,7 @@ fn main() {
     let cli = Cli::parse();
 
     match &cli.command {
-        Commands::Start { duration: _, alert } => println!("Start command: {alert}"),
+        Commands::Start { duration: _, alert } => app::start_pomodoro(),
         Commands::Done {} => println!("Done"),
         Commands::Log {} => println!("Log past pomodoros"),
     }
