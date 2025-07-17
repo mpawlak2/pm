@@ -1,6 +1,6 @@
 use std::fmt;
 
-use chrono::{Date, DateTime, TimeDelta, Utc};
+use chrono::{DateTime, TimeDelta, Utc};
 use uuid::Uuid;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -20,7 +20,7 @@ impl fmt::Display for PomodoroId {
 
 #[derive(Debug)]
 pub struct Pomodoro {
-    pub id: PomodoroId,
+    id: PomodoroId,
     start_time: DateTime<Utc>,
     end_time: Option<DateTime<Utc>>,
     duration: TimeDelta,
@@ -39,11 +39,16 @@ impl Pomodoro {
         }
     }
 
+    // Builder lite
     pub fn with_minutes(mut self, value: i64) -> Self {
         self.duration = TimeDelta::minutes(value);
         self
     }
 
+    // Getters & Properties
+    pub fn id(&self) -> &PomodoroId {
+        &self.id
+    }
     pub fn start_time(&self) -> DateTime<Utc> {
         self.start_time
     }
@@ -52,6 +57,7 @@ impl Pomodoro {
         self.start_time + self.duration < Utc::now()
     }
 
+    // Methods
     pub fn finish(&mut self, note: &str) {
         self.end_time = Some(Utc::now());
         self.note = Some(note.to_string());

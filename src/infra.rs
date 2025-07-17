@@ -8,6 +8,6 @@ impl PomodoroRepository {
     }
 
     pub fn save(&self, pomodoro: &pomo::Pomodoro) {
-        println!("Saving pomodoro with id {}", pomodoro.id);
+        println!("Saving pomodoro with id {}", pomodoro.id());
     }
 }
