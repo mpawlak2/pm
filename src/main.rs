@@ -2,10 +2,7 @@ mod app;
 mod infra;
 mod pomo;
 
-use std::{env, fs, io};
-
 use clap::{Parser, Subcommand};
-use rusqlite::Connection;
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -31,37 +28,9 @@ enum Commands {
     Log {},
 }
 
-struct AppSettings {
-    application_name: String,
-    sqlite_database_name: String,
-}
-
-impl AppSettings {
-    fn new() -> AppSettings {
-        AppSettings {
-            application_name: "pomo-cli-rust".to_string(),
-            sqlite_database_name: "database.db".to_string(),
-        }
-    }
-}
-
-struct Container {
-    settings: AppSettings,
-    database_connection: Connection,
-}
-
-impl Container {
-    fn new(settings: AppSettings) -> std::io::Result<Container> {
-        let connection = infra::create_database_connection(&settings)?;
-        Ok(Container {
-            settings: settings,
-            database_connection: connection,
-        })
-    }
-}
 
 fn main() {
-    let container = Container::new(AppSettings::new()).unwrap(); // todo: ? instead of unwrap?
+    let container = infra::container::Container::new(infra::container::AppSettings::new()).unwrap(); // todo: ? instead of unwrap?
 
     let cli = Cli::parse();
 

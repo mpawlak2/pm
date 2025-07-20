@@ -1,9 +1,10 @@
+pub mod container;
+
 use std::{env, fs};
 
 use rusqlite;
 
 use super::pomo;
-use crate::AppSettings;
 
 pub struct PomodoroRepository<'a> {
     database_connection: &'a rusqlite::Connection,
@@ -21,7 +22,7 @@ impl<'a> PomodoroRepository<'a> {
     }
 }
 
-pub fn create_database_connection(settings: &AppSettings) -> std::io::Result<rusqlite::Connection> {
+pub fn create_database_connection(settings: &container::AppSettings) -> std::io::Result<rusqlite::Connection> {
     let home_dir = env::home_dir().ok_or_else(|| {
         std::io::Error::new(
             std::io::ErrorKind::InvalidInput,

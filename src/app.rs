@@ -1,9 +1,7 @@
-use crate::Container;
-
 use super::infra;
 use super::pomo;
 
-pub fn start_pomodoro(container: &Container) {
+pub fn start_pomodoro(container: &infra::container::Container) {
     let mut pomodoro = pomo::Pomodoro::new().with_minutes(30);
     println!(
         "{pomodoro:?} {} {}",
