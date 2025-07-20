@@ -1,7 +1,9 @@
+use crate::Container;
+
 use super::infra;
 use super::pomo;
 
-pub fn start_pomodoro() {
+pub fn start_pomodoro(container: &Container) {
     let mut pomodoro = pomo::Pomodoro::new().with_minutes(30);
     println!(
         "{pomodoro:?} {} {}",
@@ -18,6 +20,6 @@ pub fn start_pomodoro() {
     );
 
     // save it to database
-    let repository = infra::PomodoroRepository::new();
+    let repository = infra::PomodoroRepository::new(&container.database_connection);
     repository.save(&pomodoro);
 }
