@@ -1,5 +1,7 @@
 use rusqlite;
 
+use crate::error;
+
 pub struct AppSettings {
     pub application_name: String,
     pub sqlite_database_name: String,
@@ -20,7 +22,7 @@ pub struct Container {
 }
 
 impl Container {
-    pub fn new(settings: AppSettings) -> std::io::Result<Container> {
+    pub fn new(settings: AppSettings) -> error::GenericResult<Container> {
         let connection = super::create_database_connection(&settings)?;
         Ok(Container {
             settings: settings,

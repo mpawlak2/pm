@@ -4,6 +4,8 @@ use std::{env, fs};
 
 use rusqlite;
 
+use crate::error;
+
 use super::pomo;
 
 pub struct PomodoroRepository<'a> {
@@ -22,17 +24,12 @@ impl<'a> PomodoroRepository<'a> {
     }
 }
 
-pub fn create_database_connection(settings: &container::AppSettings) -> std::io::Result<rusqlite::Connection> {
-    let home_dir = env::home_dir().ok_or_else(|| {
-        std::io::Error::new(
-            std::io::ErrorKind::InvalidInput,
-            "Home directory was not properly recognized!",
-        )
-    })?;
+pub fn create_database_connection(settings: &container::AppSettings) -> error::GenericResult<rusqlite::Connection> {
+    let home_dir = env::home_dir().unwrap();
     let config_dir = home_dir.join(".config").join(&settings.application_name);
     let database_path = config_dir.join(&settings.sqlite_database_name);
     fs::create_dir_all(config_dir)?;
     Ok(
-        rusqlite::Connection::open(database_path).unwrap(), // how to create custom error based on the lib error?
+        rusqlite::Connection::open(database_path)?
     )
 }
