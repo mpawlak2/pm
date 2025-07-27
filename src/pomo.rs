@@ -23,7 +23,7 @@ pub struct Pomodoro {
     id: PomodoroId,
     start_time: DateTime<Utc>,
     end_time: Option<DateTime<Utc>>,
-    duration: TimeDelta,
+    duration: i32,
     note: Option<String>,
 }
 
@@ -34,14 +34,14 @@ impl Pomodoro {
             id: PomodoroId::new(),
             start_time: Utc::now(),
             end_time: None,
-            duration: TimeDelta::minutes(default_duration),
+            duration: default_duration,
             note: None,
         }
     }
 
     // Builder lite
-    pub fn with_minutes(mut self, value: i64) -> Self {
-        self.duration = TimeDelta::minutes(value);
+    pub fn with_minutes(mut self, value: i32) -> Self {
+        self.duration = value;
         self
     }
 
@@ -53,8 +53,12 @@ impl Pomodoro {
         self.start_time
     }
 
+    pub fn duration(&self) -> i32 {
+        self.duration
+    }
+
     pub fn is_done(&self) -> bool {
-        self.start_time + self.duration < Utc::now()
+        self.start_time + TimeDelta::minutes(self.duration as i64) < Utc::now()
     }
 
     // Methods

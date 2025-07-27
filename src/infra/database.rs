@@ -1,6 +1,5 @@
 use std::{env, fs};
 
-
 pub fn create_database_connection(settings: &super::container::AppSettings) -> crate::error::GenericResult<rusqlite::Connection> {
     let home_dir = env::home_dir().unwrap();
     let config_dir = home_dir.join(".config").join(&settings.application_name);
@@ -24,4 +23,11 @@ pub fn apply_database_migrations(connection: &rusqlite::Connection) {
         )",
         (),
     ).unwrap();
+}
+
+
+impl rusqlite::ToSql for crate::pomo::PomodoroId {
+    fn to_sql(&self) -> rusqlite::Result<rusqlite::types::ToSqlOutput<'_>> {
+        Ok(rusqlite::types::ToSqlOutput::from(self.to_string()))
+    }
 }

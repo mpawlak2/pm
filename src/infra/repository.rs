@@ -12,6 +12,10 @@ impl<'a> PomodoroRepository<'a> {
     }
 
     pub fn save(&self, pomodoro: &pomo::Pomodoro) {
+        self.database_connection.execute(
+            "INSERT INTO pomodoro (id, start_time, duration) VALUES (?, ?, ?)",
+            (pomodoro.id(), pomodoro.start_time(), pomodoro.duration()),
+        ).unwrap();
         println!("Saving pomodoro with id {}", pomodoro.id());
     }
 }

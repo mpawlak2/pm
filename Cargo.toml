@@ -6,5 +6,5 @@ edition = "2024"
 [dependencies]
 chrono = "0.4.41"
 clap = { version = "4.5.41", features = ["derive"] }
-rusqlite = { version = "0.37.0", features = ["bundled"] }
+rusqlite = { version = "0.37.0", features = ["bundled", "chrono"] }
 uuid = { version = "1.17.0", features = ["v4"] }
