@@ -11,6 +11,7 @@ pub fn create_database_connection(settings: &super::container::AppSettings) -> c
 }
 
 pub fn apply_database_migrations(connection: &rusqlite::Connection) {
+    // todo: create/reuse migration management system
     connection.execute(
         "CREATE TABLE IF NOT EXISTS pomodoro (
             id CHARACTER(36) PRIMARY KEY,
@@ -18,8 +19,8 @@ pub fn apply_database_migrations(connection: &rusqlite::Connection) {
             end_time DATETIME,
             duration INT NOT NULL,
             note TEXT,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )",
         (),
     ).unwrap();

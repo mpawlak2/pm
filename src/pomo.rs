@@ -53,8 +53,16 @@ impl Pomodoro {
         self.start_time
     }
 
+    pub fn end_time(&self) -> Option<DateTime<Utc>> {
+        self.end_time
+    }
+
     pub fn duration(&self) -> i32 {
         self.duration
+    }
+
+    pub fn note(&self) -> Option<String> {
+        self.note.clone()
     }
 
     pub fn is_done(&self) -> bool {
