@@ -21,3 +21,10 @@ pub fn start_pomodoro(container: &infra::container::Container) {
     let repository = infra::repository::PomodoroRepository::new(&container.database_connection);
     repository.save(&pomodoro);
 }
+
+pub fn log_pomodoros(container: &infra::container::Container) {
+    // todo: move repository to the container - it will be used everywhere
+    let repository = infra::repository::PomodoroRepository::new(&container.database_connection);
+
+    let pomodoros = repository.find_all();
+}

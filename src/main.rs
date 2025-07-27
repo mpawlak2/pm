@@ -38,6 +38,6 @@ fn main() {
     match &cli.command {
         Commands::Start { duration: _, alert } => app::start_pomodoro(&container),
         Commands::Done {} => println!("Done"),
-        Commands::Log {} => println!("Log past pomodoros"),
+        Commands::Log {} => app::log_pomodoros(&container),
     }
 }
