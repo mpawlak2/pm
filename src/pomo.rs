@@ -53,7 +53,7 @@ impl Pomodoro {
         self.start_time
     }
 
-    pub fn is_time_up(&self) -> bool {
+    pub fn is_done(&self) -> bool {
         self.start_time + self.duration < Utc::now()
     }
 

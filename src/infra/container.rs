@@ -23,7 +23,8 @@ pub struct Container {
 
 impl Container {
     pub fn new(settings: AppSettings) -> error::GenericResult<Container> {
-        let connection = super::create_database_connection(&settings)?;
+        let connection = super::database::create_database_connection(&settings)?;
+        super::database::apply_database_migrations(&connection);
         Ok(Container {
             settings: settings,
             database_connection: connection,

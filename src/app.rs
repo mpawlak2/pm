@@ -6,7 +6,7 @@ pub fn start_pomodoro(container: &infra::container::Container) {
     println!(
         "{pomodoro:?} {} {}",
         pomodoro.start_time(),
-        pomodoro.is_time_up()
+        pomodoro.is_done()
     );
 
     pomodoro.finish("Testing Note");
@@ -14,10 +14,10 @@ pub fn start_pomodoro(container: &infra::container::Container) {
     println!(
         "{pomodoro:?} {} {}",
         pomodoro.start_time(),
-        pomodoro.is_time_up()
+        pomodoro.is_done()
     );
 
     // save it to database
-    let repository = infra::PomodoroRepository::new(&container.database_connection);
+    let repository = infra::repository::PomodoroRepository::new(&container.database_connection);
     repository.save(&pomodoro);
 }
