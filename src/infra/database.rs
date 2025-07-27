@@ -24,10 +24,3 @@ pub fn apply_database_migrations(connection: &rusqlite::Connection) {
         (),
     ).unwrap();
 }
-
-
-impl rusqlite::ToSql for crate::pomo::PomodoroId {
-    fn to_sql(&self) -> rusqlite::Result<rusqlite::types::ToSqlOutput<'_>> {
-        Ok(rusqlite::types::ToSqlOutput::from(self.to_string()))
-    }
-}
